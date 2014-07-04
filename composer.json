@@ -39,10 +39,6 @@
         {
             "type": "vcs",
             "url": "git@github.com:Evaneos/berthe.git"
-        // },
-        // {
-        //     "type": "vcs",
-        //     "url": "git@github.com:Evaneos/dic-itools"
         }
     ],
     "config": {
