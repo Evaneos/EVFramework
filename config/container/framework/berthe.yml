@@ -1,0 +1,26 @@
+classes:
+    FetcherPGSQLQueryBuilder:
+        class: \Berthe\DAL\FetcherPGSQLQueryBuilder
+        singleton: true
+    DbReader:
+        class: \Berthe\DAL\DbReader
+        singleton: true
+        arguments: [ @DbAdapter ]
+    DbWriter:
+        class: \Berthe\DAL\DbWriter
+        singleton: true
+        arguments: [ @DbAdapter ]
+    DbAdapter:
+        class: Zend_Db_Adapter_Abstract
+        builder: \Zend_Db::factory
+        arguments: [ %db.adapter, %db.params ]
+    DbTranslator:
+        class: \Evaneos\Berthe\DAL\Translator
+        call:
+            setDb: [ @DbWriter ]
+    Memcached:
+        class: \Memcached
+        call:
+            addServer: [ %memcached.host, %memcached.port ]
+    FunctionalListException:
+        class: \Berthe\ErrorHandler\FunctionalErrorListException

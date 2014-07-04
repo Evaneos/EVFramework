@@ -1,0 +1,31 @@
+classes:
+    SecurityContext:
+        class: \Trolamine\Core\SimpleSecurityContext
+        singleton: true
+        arguments: [ @AccessDecisionManager ]
+    AuthenticationManager:
+        class: \Trolamine\Core\Authentication\BaseAuthenticationManager
+        singleton: true
+        arguments: [ ] #add the arguments if use
+    AccessDecisionManager:
+        class: \Trolamine\Core\Access\UnanimousBased
+        singleton: true
+        arguments: [ [ @OperationDecisionVoter ] ]
+    OperationDecisionVoter:
+        class: \Trolamine\Core\Access\OperationDecisionVoter
+        singleton: true
+    SecurityActivator:
+        class: Trolamine\Activator\SecurityActivator
+        arguments: [ @SecuredClassFactory ]
+    AuthenticationLayer:
+        class: \Trolamine\Layer\AuthenticationLayer
+        arguments: [  @SecurityContext, authentication ]
+
+    # Factory
+    SecuredClassFactory:
+        class: \Trolamine\Factory\GenericSecuredClassFactory
+        arguments: [ @SecurityContext, %secured_dir ]
+
+    # Operations
+    MethodSecurityExpressionOperations:
+        class: \Trolamine\Core\Operation\MethodSecurityExpressionRoot

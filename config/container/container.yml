@@ -1,0 +1,5 @@
+include:
+    - framework/errors.yml
+    - framework/pyrite.yml
+    - framework/trolamine.yml
+    - framework/berthe.yml

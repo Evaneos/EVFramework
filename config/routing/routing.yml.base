@@ -1,0 +1,13 @@
+routes:
+    index:
+        route:
+            pattern: "/"
+            methods: [ get ]
+        dispatch:
+            PyriteSessionFactory: { 'start': true }
+            PyriteApplicationFactory:
+                AuthenticationLayer: [ ]
+                ViewRenderer:
+                    success: /app/browser/helloworld/views/demo.html.twig
+                    module: 'helloworld'
+                Executor: [ HelloWorldIndexController ]

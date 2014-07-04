@@ -1,5 +1,5 @@
 {
-    "name": "evaneos/framework",
+    "name": "evaneos/evframework",
     "description": "Evaneos Framework stack with glue",
     "version": "1.0.0",
     "type": "application",
@@ -16,11 +16,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "Evaneos\\Api\\": "src/"
-        },
-        "files": [
-            "lib/functions/t.php"
-        ]
+            "EVFramework\\": "src/"
+        }
     },
     "repositories": [
         {
@@ -42,20 +39,21 @@
         {
             "type": "vcs",
             "url": "git@github.com:Evaneos/berthe.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:Evaneos/dic-itools"
-            }
+        // },
+        // {
+        //     "type": "vcs",
+        //     "url": "git@github.com:Evaneos/dic-itools"
+        }
     ],
     "config": {
         "bin-dir": "bin/"
     },
     "require": {
         "oliviermadre/translations": "dev-master",
-        "ocramius/proxy-manager": "0.5.0",
+        "oliviermadre/dic-it": "dev-master",
         "evaneos/pyrite": "dev-master",
         "evaneos/trolamine": "dev-master",
+        "evaneos/berthe" : "dev-master-namespace",
         "monolog/monolog": "1.7.0",
         "league/fractal": "~0.7.0",
         "twig/twig": "1.*",
