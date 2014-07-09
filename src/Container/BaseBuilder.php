@@ -8,7 +8,7 @@ use DICIT\Config\YML;
 use Pyrite\Config\NullConfig;
 use Symfony\Component\HttpFoundation\Request;
 
-class Builder
+class BaseBuilder
 {
     /**
      * Return a DIC-IT container, using adapter to respect Pyrite interface.
