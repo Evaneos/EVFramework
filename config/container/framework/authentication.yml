@@ -1,0 +1,43 @@
+classes:
+    ServiceAuthentication :
+        class : \EVFramework\Authentication\ServiceAuthentication
+        arguments : [ @BaseAuthenticationManager ]
+    BaseAuthenticationManager :
+        class : \Trolamine\Core\Authentication\BaseAuthenticationManager
+        arguments : [ @BaseUserDetailsService, @BasePasswordEncoder, @BaseRoleManager ]
+    BaseUserDetailsService :
+        class : \EVFramework\Authentication\BaseUserDetailsService
+        call :
+            setValidator : [ @AuthUserValidator ]
+            setStorage : [ @AuthUserStorage ]
+            setVOFQCN : [ \EVFramework\Authentication\User ]
+    BasePasswordEncoder :
+        class : \EVFramework\Authentication\BasePasswordEncoder
+    BaseRoleManager :
+        class : \EVFramework\Authentication\BaseRoleManager
+
+    AuthUserValidator :
+        class : \Berthe\Validation\BaseValidator
+        call :
+            setErrors: [ @FunctionalListException ]
+    AuthUserStorage :
+        class : \Berthe\DAL\BaseStorage
+        call :
+            addStore : [ @AuthUserPersistentStore ]
+    AuthUserPersistentStore :
+        class : \Berthe\DAL\StoreDatabase
+        call :
+            setReader : [ @AuthUserReader ]
+            setWriter : [ @AuthUserWriter ]
+    AuthUserReader :
+        class : \Berthe\DAL\BaseReader
+        call :
+            setDb : [ @DbReader ]
+            setVOFQCN : [ \EVFramework\Authentication\User ]
+            setTablename : [ users ]
+            setQueryBuilder : [ @FetcherPGSQLQueryBuilder ]
+    AuthUserWriter :
+        class : \Berthe\DAL\BaseWriter
+        call :
+            setDb : [ @DbWriter ]
+            setTableName: ['users']

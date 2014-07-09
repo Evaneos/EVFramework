@@ -1,5 +1,6 @@
 include:
     - framework/errors.yml
     - framework/pyrite.yml
-    - framework/trolamine.yml
     - framework/berthe.yml
+    - framework/trolamine.yml
+    - framework/authentication.yml

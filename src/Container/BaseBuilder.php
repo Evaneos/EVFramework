@@ -32,7 +32,6 @@ class Builder
 
         $activator = new ActivatorFactory();
         $container = new DICITAdapter($config, $activator);
-
         $activator->addActivator('security', $container->get('SecurityActivator'), false);
 
         // initialize the translation engine
