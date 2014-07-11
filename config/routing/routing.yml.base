@@ -11,3 +11,30 @@ routes:
                     success: /app/browser/helloworld/views/demo.html.twig
                     module: 'helloworld'
                 Executor: [ HelloWorldIndexController ]
+
+    # expects "email" and "password" post data by default, see AuthDoLoginController injection configuration
+    login:
+        route:
+            pattern: "/login"
+            methods: [ post ]
+        dispatch:
+            PyriteSessionFactory: { 'start': true }
+            PyriteApplicationFactory:
+                AuthenticationLayer: [ ]
+                RedirectionLayer :
+                    success : /
+                    failure : /
+                Executor: [ AuthDoLoginController ]
+
+    logout:
+        route:
+            pattern: "/logout"
+            methods: [ get ]
+        dispatch:
+            PyriteSessionFactory: { 'start': true }
+            PyriteApplicationFactory:
+                AuthenticationLayer: [ ]
+                RedirectionLayer :
+                    success : /
+                    failure : /
+                Executor: [ AuthDoLogoutController ]

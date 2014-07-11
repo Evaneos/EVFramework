@@ -13,7 +13,6 @@ class BaseUserDetailsService extends \Berthe\BaseManager implements UserDetailsS
      */
     public function loadUserByUsername($email)
     {
-
         $fetcher = new BertheAuthUserFetcher(1, 1);
         $fetch   = $fetcher->filterByEmail($email);
         $result  = $this->getByFetcher($fetch)->getResultSet();

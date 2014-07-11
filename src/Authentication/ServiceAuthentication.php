@@ -11,7 +11,7 @@ use Evaneos\Pro\Framework\Security\EvaneosPasswordEncoder;
 use Trolamine\Core\Authentication\Password\PasswordEncoder;
 use Trolamine\Core\Authentication\Authentication;
 use Trolamine\Core\Authentication\Role\RoleManager;
-use Trolamine\Core\Authentication\BaseAuthenticationManager;
+use Trolamine\Core\Authentication\AuthenticationManager;
 use Trolamine\Core\Authentication\UsernamePasswordAuthenticationToken;
 use Trolamine\Core\Exception\BadCredentialsException;
 use Trolamine\Core\Exception\InsufficientAuthenticationException;
@@ -29,7 +29,6 @@ class ServiceAuthentication
     public function __construct(AuthenticationManager $authenticationManager)
     {
         $this->authenticationManager = $authenticationManager;
-        // $this->authenticationManager = new BaseAuthenticationManager($this->userDetailsService, $encoder, $roleManager);
     }
 
     /**
@@ -42,7 +41,6 @@ class ServiceAuthentication
     public function login($email, $password)
     {
         session_regenerate_id(true);
-
         try {
             return $this->authenticationManager->authenticate(new UsernamePasswordAuthenticationToken($email, $password));
         }

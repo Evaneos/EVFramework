@@ -1,21 +1,52 @@
+parameters :
+    roles :
+        ROLE_VISITOR : 0
+        ROLE_ADMIN : 1
+        ROLE_DEVELOPPER : 2
+    security :
+        base :
+            isDevelopper :
+                operation : @MethodSecurityExpressionOperations
+                method : hasRole
+                args : [ ROLE_DEVELOPPER ]
+            isLogged :
+                operation  : @MethodSecurityExpressionOperations
+                method : isAuthenticated
+
+
 classes:
+    # Controller for login/logout processing
+    AuthDoLoginController :
+        class : \EVFramework\Authentication\LoginPostController
+        arguments : [ @ServiceAuthentication, @SecurityContext ]
+        call :
+            setEmailFieldName : [ 'email' ]
+            setPasswordFieldName : [ 'password' ]
+    AuthDoLogoutController :
+        class : \EVFramework\Authentication\LogoutController
+        arguments : [ @SecurityContext ]
+
+    # Service that manage authentication
     ServiceAuthentication :
         class : \EVFramework\Authentication\ServiceAuthentication
         arguments : [ @BaseAuthenticationManager ]
     BaseAuthenticationManager :
         class : \Trolamine\Core\Authentication\BaseAuthenticationManager
-        arguments : [ @BaseUserDetailsService, @BasePasswordEncoder, @BaseRoleManager ]
+        arguments : [ @BaseUserDetailsService, @BasePasswordEncoder, @BitwiseRoleManager ]
     BaseUserDetailsService :
         class : \EVFramework\Authentication\BaseUserDetailsService
         call :
             setValidator : [ @AuthUserValidator ]
             setStorage : [ @AuthUserStorage ]
-            setVOFQCN : [ \EVFramework\Authentication\User ]
+            setVOFQCN : [ \EVFramework\Authentication\BertheAuthUser ]
     BasePasswordEncoder :
         class : \EVFramework\Authentication\BasePasswordEncoder
-    BaseRoleManager :
-        class : \EVFramework\Authentication\BaseRoleManager
+    BitwiseRoleManager :
+        class : \EVFramework\Authentication\BitwiseRoleManager
+        call :
+            setRoles : [ %roles ]
 
+    # Berthe package that provides a user for authentication, with ServiceAuthentication as BaseManager
     AuthUserValidator :
         class : \Berthe\Validation\BaseValidator
         call :
@@ -33,7 +64,7 @@ classes:
         class : \Berthe\DAL\BaseReader
         call :
             setDb : [ @DbReader ]
-            setVOFQCN : [ \EVFramework\Authentication\User ]
+            setVOFQCN : [ \EVFramework\Authentication\BertheAuthUser ]
             setTablename : [ users ]
             setQueryBuilder : [ @FetcherPGSQLQueryBuilder ]
     AuthUserWriter :

@@ -5,17 +5,24 @@ use Trolamine\Core\Authentication\Role\RoleManager;
 use Trolamine\Core\Authentication\UserDetails;
 use Evaneos\Modules\User\User;
 
-class BaseRoleManager implements RoleManager
+class BitwiseRoleManager implements RoleManager
 {
     /*
      * Exteriors
     */
-    public $roles = array (
-        'ROLE_VISITOR'          => 0,
-        'ROLE_LOGGED'           => 1,
-        'ROLE_ADMIN'            => 2,
-        'ROLE_DEVELOPPER'       => 4,
-    );
+    protected $roles = array();
+
+    public function setRoles(array $roles = array())
+    {
+        $this->roles = $roles;
+        return $this;
+    }
+
+    public function addRole($name, $bit)
+    {
+        $this->roles[$name] = $bit;
+        return $this;
+    }
 
     /**
      * (non-PHPdoc)
@@ -38,7 +45,6 @@ class BaseRoleManager implements RoleManager
      */
     private function getRolesFromBitwise($bitwise) {
         $roles = array();
-
         foreach ($this->roles as $roleName=>$roleValue) {
             if((bool) ($roleValue & $bitwise)) {
                 $roles[] = $roleName;

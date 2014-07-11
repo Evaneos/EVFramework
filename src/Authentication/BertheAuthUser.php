@@ -37,7 +37,8 @@ class BertheAuthUser extends \Berthe\AbstractVO {
      *
      * @return string
      */
-    public function getLogin() {
+    public function getLogin()
+    {
         return $this->email;
     }
 
@@ -46,7 +47,8 @@ class BertheAuthUser extends \Berthe\AbstractVO {
      *
      * @return string
      */
-    public function getPassword() {
+    public function getPassword()
+    {
         return $this->password;
     }
 
@@ -55,7 +57,13 @@ class BertheAuthUser extends \Berthe\AbstractVO {
      *
      * @return number
      */
-    public function getAcl() {
+    public function getAcl()
+    {
         return $this->acl;
+    }
+
+    public function getSalt()
+    {
+        return $this->salt;
     }
 }
