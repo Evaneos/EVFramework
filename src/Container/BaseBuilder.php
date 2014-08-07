@@ -43,6 +43,8 @@ class BaseBuilder
             $locale = $container->getParameter('default_locale.default');
         }
 
+        $container->setParameter('current_locale', $locale);
+
         $translationManager->setLocale($locale);
 
         return $container;
