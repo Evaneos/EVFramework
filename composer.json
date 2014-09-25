@@ -1,7 +1,6 @@
 {
     "name": "evaneos/evframework",
     "description": "Evaneos Framework stack with glue",
-    "version": "1.0.0",
     "type": "application",
     "homepage": "http://github.com/Evaneos/Framework",
     "time": "2014-07-02",
@@ -25,11 +24,11 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com:oliviermadre/dic-it.git"
+            "url": "git@github.com:Evaneos/dic-it.git"
         },
         {
             "type": "vcs",
-            "url": "git@github.com:oliviermadre/translations.git"
+            "url": "git@github.com:Evaneos/translations.git"
         },
         {
             "type": "vcs",
@@ -48,12 +47,12 @@
         "bin-dir": "bin/"
     },
     "require": {
-        "oliviermadre/translations": "dev-master",
-        "oliviermadre/dic-it": "dev-master",
-        "evaneos/pyrite": "dev-master",
-        "evaneos/trolamine": "dev-master",
+        "evaneos/translations": "dev-master",
+        "evaneos/dic-it": "~1.0.1",
+        "evaneos/pyrite": "~1.0.1",
+        "evaneos/trolamine": "~1.0.1",
         "evaneos/berthe" : "dev-master-namespace",
-        "monolog/monolog": "1.7.0",
+        "monolog/monolog": "1.11.*@dev",
         "league/fractal": "~0.7.0",
         "twig/twig": "1.*",
         "asm89/stack-cors": "0.2.*"
