@@ -39,6 +39,9 @@ classes:
         arguments: [ @TemplateRenderer ]
         call:
             setRootDir: [ %root_dir ]
+    PhtmlRenderer:
+        class: \Pyrite\Layer\ViewPhtml\PhtmlRenderer
+        arguments: [ %view_dir ]
     Executor:
         class: \Pyrite\Layer\ExecutorLayer
         arguments: [ $container ]
