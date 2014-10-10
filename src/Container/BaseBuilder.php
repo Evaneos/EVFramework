@@ -47,6 +47,13 @@ class BaseBuilder
 
         $translationManager->setLocale($locale);
 
+        $director = $container->get('PyRestDirector');
+        $packages = $container->getParameter('crud.packages');
+        foreach($packages as $pname => $configuration) {
+            $director->buildAll($pname);
+        }
+
+
         return $container;
     }
 }

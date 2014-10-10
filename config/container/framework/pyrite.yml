@@ -1,3 +1,11 @@
+parameters :
+    crud :
+        configuration :
+            definition_name : Berthe-%s-%s # 1st is package name, 2nd is class type with ucfirst
+
+        # packages :
+        #     users : { 'vo' : '\Evaneos\Modules\User\User', 'table' : 'users' }
+
 classes:
     RemoteActivator:
         class: \DICIT\Activators\RemoteActivator
@@ -46,11 +54,118 @@ classes:
         class: \Pyrite\Layer\ExecutorExtendedLayer
         arguments: [ $container ]
 
+    OutputLayer :
+        class: Pyrite\Layer\OutputLayer
+        arguments: [ @JsonOutputBuilder ]
+        call:
+            addOutputBuilder[0]: [ 'json', @JsonOutputBuilder ]
+            addOutputBuilder[1]: [ 'html', @HtmlOutputBuilder ]
+            addOutputBuilder[2]: [ 'xml', @XmlOutputBuilder ]
+            # addOutputBuilder[3]: [ 'csv', @CsvOutputBuilder ]
+            # addOutputBuilder[4]: [ 'pdf', @PdfOutputBuilder ]
+            # addOutputBuilder[5]: [ 'custom-pdf', @PdfOutputBuilder ]
+        singleton : true
+
+
     #########################
     # REST PARAMETERS
     #########################
     FormatTransformer:
         class: Pyrite\ParameterTransformer\FormatTransformer
+
+    PyRestLayer:
+        class: Pyrite\PyRest\PyRestController
+        call:
+            setPyRestConfiguration : [ @PyRestConfiguration ]
+            setContainer : [ $container ]
+            setSerializer : [ @EmbedSerializer ]
+    PyRestEmbedSerializer :
+        class : Pyrite\PyRest\Serialization\EmbedSerializer
+        call:
+            setUrlGenerator : [ @PyRestUrlGenerator ]
+    PyRestUrlGenerator :
+        class : Pyrite\PyRest\PyRestUrlGenerator
+        arguments : [ @UrlGenerator ]
+    EmbedSerializer :
+        class : Pyrite\PyRest\Serialization\EmbedSerializer
+        arguments : [ @PyRestUrlGenerator ]
+    PyRestConfiguration:
+        class: Pyrite\PyRest\PyRestConfiguration
+        call :
+            addParser[0] : [ @PyRestConfigParserEmbed ]
+            addParser[1] : [ @PyRestConfigParserFilter ]
+            addParser[2] : [ @PyRestConfigParserPagination ]
+            addParser[3] : [ @PyRestConfigParserResourceId ]
+            addParser[4] : [ @PyRestConfigParserResourceName ]
+            addParser[5] : [ @PyRestConfigParserSort ]
+            addParser[6] : [ @PyRestConfigParserExpectedResultType ]
+    PyRestConfigParserEmbed :
+        class : Pyrite\PyRest\Configuration\EmbedParser
+    PyRestConfigParserFilter :
+        class : Pyrite\PyRest\Configuration\FilterParser
+    PyRestConfigParserPagination :
+        class : Pyrite\PyRest\Configuration\PaginationParser
+    PyRestConfigParserResourceId :
+        class : Pyrite\PyRest\Configuration\ResourceIdParser
+    PyRestConfigParserResourceName :
+        class : Pyrite\PyRest\Configuration\ResourceNameParser
+        arguments : [ $container ]
+    PyRestConfigParserSort :
+        class : Pyrite\PyRest\Configuration\SortParser
+    PyRestConfigParserExpectedResultType :
+        class : Pyrite\PyRest\Configuration\ExpectedResultTypeParser
+        arguments : [ $container ]
+
+
+    BerthePyRestController:
+        class: EVFramework\PyRest\BerthePyRestController
+        call:
+            setConfigurationDirector : [ @PyRestDirector ]
+            setContainer : [ $container ]
+
+    PyRestDirector:
+        class: EVFramework\Generator\Configuration\DirectorInjectorDecorator
+        arguments : [ $container, @PyRestBaseDirector ]
+        call :
+            addBuilder[0] : [ @PyRestServiceBuilder ]
+            addBuilder[1] : [ @PyRestManagerBuilder ]
+            addBuilder[2] : [ @PyRestValidatorBuilder ]
+            addBuilder[3] : [ @PyRestStorageBuilder ]
+            # addBuilder[4] : [ @PyRestMemcachedStoreBuilder ]
+            addBuilder[5] : [ @PyRestPersistentStoreBuilder ]
+            addBuilder[6] : [ @PyRestReaderBuilder ]
+            addBuilder[7] : [ @PyRestWriterBuilder ]
+            addBuilder[8] : [ @PyRestBuilderBuilder ]
+            addBuilder[9] : [ @PyRestFetcherBuilderBuilder ]
+            # addBuilder[10] : [ @PyRestComposerBuilder ]
+            # addBuilder[11] : [ @PyRestTransformerBuilder ]
+    PyRestBaseDirector:
+        class: EVFramework\Generator\Configuration\DirectorImpl
+        arguments : [ $container ]
+    PyRestServiceBuilder :
+        class : \EVFramework\Generator\Configuration\ServiceBuilder
+    PyRestManagerBuilder :
+        class : \EVFramework\Generator\Configuration\ManagerBuilder
+    PyRestValidatorBuilder :
+        class : \EVFramework\Generator\Configuration\ValidatorBuilder
+    PyRestStorageBuilder :
+        class : \EVFramework\Generator\Configuration\StorageBuilder
+    # PyRestMemcachedStoreBuilder :
+    #     class : \EVFramework\Generator\Configuration\MemcachedStoreBuilder
+    PyRestPersistentStoreBuilder :
+        class : \EVFramework\Generator\Configuration\PersistentStoreBuilder
+    PyRestReaderBuilder :
+        class : \EVFramework\Generator\Configuration\ReaderBuilder
+    PyRestWriterBuilder :
+        class : \EVFramework\Generator\Configuration\WriterBuilder
+    PyRestBuilderBuilder :
+        class : \EVFramework\Generator\Configuration\BuilderBuilder
+    PyRestFetcherBuilderBuilder :
+        class : \EVFramework\Generator\Configuration\FetcherBuilderBuilder
+    # PyRestComposerBuilder :
+    #     class : \EVFramework\Generator\Configuration\ComposerBuilder
+    # PyRestTransformerBuilder :
+    #     class : \EVFramework\Generator\Configuration\TransformerBuilder
 
     #########################
     # OUTPUT BUILDERS
