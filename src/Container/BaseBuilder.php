@@ -49,10 +49,10 @@ class BaseBuilder
 
         $director = $container->get('PyRestDirector');
         $packages = $container->getParameter('crud.packages');
-        foreach($packages as $pname => $configuration) {
-            $director->buildAll($pname);
-        }
 
+        foreach($packages as $packageName => $packageConfiguration) {
+            $director->buildAll($packageName);
+        }
 
         return $container;
     }

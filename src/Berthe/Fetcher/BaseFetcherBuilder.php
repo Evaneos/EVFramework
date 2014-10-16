@@ -6,6 +6,8 @@ use Pyrite\PyRest\PyRestConfiguration;
 use Pyrite\PyRest\Configuration\PaginationParser;
 use Pyrite\PyRest\Configuration\FilterParser;
 use Berthe\Fetcher;
+use Pyrite\PyRest\Exception\NotImplementedException;
+use Pyrite\PyRest\Exception\BadRequestException;
 
 class BaseFetcherBuilder implements FetcherBuilder
 {
@@ -74,13 +76,23 @@ class BaseFetcherBuilder implements FetcherBuilder
         $parameters = $config->getConfig(FilterParser::NAME, array());
         if (array_key_exists(FilterParser::FILTER_BY_RESOURCE_NAME, $parameters)) {
             $by = $parameters[FilterParser::FILTER_BY_RESOURCE_NAME];
-            $methodName = 'filterByIdOfResource' . ucfirst($by);
 
-            if (method_exists($fetcher, $methodName)) {
-                $fetcher->$methodName($parameters[FilterParser::FILTER_BY_RESOURCE_ID]);
+            $nested = $config->getRequest()->attributes->get('nested', null);
+            if (!$nested) {
+                throw new BadRequestException(sprintf("Couldn't filter nested resource without its name"));
+            }
+
+            $methodName = 'filter' . ucfirst($nested) . 'ByIdOfResource' . ucfirst($by);
+
+            if (method_exists($this, $methodName)) {
+                $this->$methodName($fetcher, $parameters[FilterParser::FILTER_BY_RESOURCE_ID]);
             }
             else {
-                throw new \Pyrite\PyRest\Exception\NotImplementedException(sprintf("Couldn't filter resource by its parent '%s', method '%s' not implemented in '%s'", $by, $methodName, get_class($fetcher)));
+                throw new NotImplementedException(
+                    sprintf("Couldn't filter resource by its parent '%s', method '%s' not implemented in '%s'",
+                        $by,
+                        $methodName,
+                        get_class($this)));
             }
         }
     }

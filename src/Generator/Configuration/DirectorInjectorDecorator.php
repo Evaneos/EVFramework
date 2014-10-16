@@ -13,12 +13,12 @@ class DirectorInjectorDecorator implements Director
         $this->wrapped = $director;
     }
 
-    public function addBuilder(Builder $builder)
+    public function addBuilder(Builder\Builder $builder)
     {
         return $this->wrapped->addBuilder($builder);
     }
 
-    public function build(Builder $builder, $resourceName)
+    public function build(Builder\Builder $builder, $resourceName)
     {
         $result = $this->wrapped->build($builder, $resourceName);
         list($class, $configuration) = $result;

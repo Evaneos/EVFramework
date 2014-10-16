@@ -81,17 +81,18 @@ classes:
         call:
             setPyRestConfiguration : [ @PyRestConfiguration ]
             setContainer : [ $container ]
-            setSerializer : [ @EmbedSerializer ]
+            setSerializer : [ @PyRestEmbedSerializer ]
+            setConverter : [ @PyRestConverter ]
+    PyRestConverter :
+        class : Pyrite\PyRest\PyRestConverter
+        call :
+            setContainer : [ $container ]
     PyRestEmbedSerializer :
         class : Pyrite\PyRest\Serialization\EmbedSerializer
-        call:
-            setUrlGenerator : [ @PyRestUrlGenerator ]
+        arguments : [ @PyRestUrlGenerator ]
     PyRestUrlGenerator :
         class : Pyrite\PyRest\PyRestUrlGenerator
         arguments : [ @UrlGenerator ]
-    EmbedSerializer :
-        class : Pyrite\PyRest\Serialization\EmbedSerializer
-        arguments : [ @PyRestUrlGenerator ]
     PyRestConfiguration:
         class: Pyrite\PyRest\PyRestConfiguration
         call :
@@ -102,6 +103,7 @@ classes:
             addParser[4] : [ @PyRestConfigParserResourceName ]
             addParser[5] : [ @PyRestConfigParserSort ]
             addParser[6] : [ @PyRestConfigParserExpectedResultType ]
+            addParser[7] : [ @PyRestConfigParserVerbosity ]
     PyRestConfigParserEmbed :
         class : Pyrite\PyRest\Configuration\EmbedParser
     PyRestConfigParserFilter :
@@ -115,6 +117,8 @@ classes:
         arguments : [ $container ]
     PyRestConfigParserSort :
         class : Pyrite\PyRest\Configuration\SortParser
+    PyRestConfigParserVerbosity :
+        class : Pyrite\PyRest\Configuration\VerbosityParser
     PyRestConfigParserExpectedResultType :
         class : Pyrite\PyRest\Configuration\ExpectedResultTypeParser
         arguments : [ $container ]
@@ -140,35 +144,32 @@ classes:
             addBuilder[7] : [ @PyRestWriterBuilder ]
             addBuilder[8] : [ @PyRestBuilderBuilder ]
             addBuilder[9] : [ @PyRestFetcherBuilderBuilder ]
-            # addBuilder[10] : [ @PyRestComposerBuilder ]
-            # addBuilder[11] : [ @PyRestTransformerBuilder ]
+            addBuilder[10] : [ @PyRestRESTBuilderBuilder ]
     PyRestBaseDirector:
         class: EVFramework\Generator\Configuration\DirectorImpl
         arguments : [ $container ]
     PyRestServiceBuilder :
-        class : \EVFramework\Generator\Configuration\ServiceBuilder
+        class : \EVFramework\Generator\Configuration\Builder\ServiceBuilder
     PyRestManagerBuilder :
-        class : \EVFramework\Generator\Configuration\ManagerBuilder
+        class : \EVFramework\Generator\Configuration\Builder\ManagerBuilder
     PyRestValidatorBuilder :
-        class : \EVFramework\Generator\Configuration\ValidatorBuilder
+        class : \EVFramework\Generator\Configuration\Builder\ValidatorBuilder
     PyRestStorageBuilder :
-        class : \EVFramework\Generator\Configuration\StorageBuilder
+        class : \EVFramework\Generator\Configuration\Builder\StorageBuilder
     # PyRestMemcachedStoreBuilder :
-    #     class : \EVFramework\Generator\Configuration\MemcachedStoreBuilder
+    #     class : \EVFramework\Generator\Configuration\Builder\MemcachedStoreBuilder
     PyRestPersistentStoreBuilder :
-        class : \EVFramework\Generator\Configuration\PersistentStoreBuilder
+        class : \EVFramework\Generator\Configuration\Builder\PersistentStoreBuilder
     PyRestReaderBuilder :
-        class : \EVFramework\Generator\Configuration\ReaderBuilder
+        class : \EVFramework\Generator\Configuration\Builder\ReaderBuilder
     PyRestWriterBuilder :
-        class : \EVFramework\Generator\Configuration\WriterBuilder
+        class : \EVFramework\Generator\Configuration\Builder\WriterBuilder
     PyRestBuilderBuilder :
-        class : \EVFramework\Generator\Configuration\BuilderBuilder
+        class : \EVFramework\Generator\Configuration\Builder\BuilderBuilder
     PyRestFetcherBuilderBuilder :
-        class : \EVFramework\Generator\Configuration\FetcherBuilderBuilder
-    # PyRestComposerBuilder :
-    #     class : \EVFramework\Generator\Configuration\ComposerBuilder
-    # PyRestTransformerBuilder :
-    #     class : \EVFramework\Generator\Configuration\TransformerBuilder
+        class : \EVFramework\Generator\Configuration\Builder\FetcherBuilderBuilder
+    PyRestRESTBuilderBuilder :
+        class : \EVFramework\Generator\Configuration\Builder\RESTBuilderBuilder
 
     #########################
     # OUTPUT BUILDERS

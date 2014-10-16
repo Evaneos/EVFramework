@@ -1,6 +1,6 @@
 <?php
 
-namespace EVFramework\Generator\Configuration;
+namespace EVFramework\Generator\Configuration\Builder;
 
 interface Builder
 {

@@ -12,12 +12,12 @@ class DirectorImpl implements Director
         $this->container = $container;
     }
 
-    public function addBuilder(Builder $builder)
+    public function addBuilder(Builder\Builder $builder)
     {
         $this->builders[] = $builder;
     }
 
-    public function build(Builder $builder, $resourceName)
+    public function build(Builder\Builder $builder, $resourceName)
     {
         $builder->setContainer($this->container);
         return $builder->build($resourceName);

@@ -71,9 +71,13 @@ class BerthePyRestController
         $bag->set('count', $result->getTtlCount());
 
         // post treatment back-end side
-        // here
 
         return $result;
+    }
+
+    public function nestedAll(Request $request, ResponseBag $bag)
+    {
+        return $this->getAll($request, $bag);
     }
 
     public function get(Request $request, ResponseBag $bag)
@@ -86,14 +90,14 @@ class BerthePyRestController
         $service = $this->getBertheService($resourceName);
 
         // run query against DAL
-        $result = $service->getById($resourceId);
-
-        $bag->set('data', $result);
-
-        // post treatment back-end side
-        // here
-
-        return $result;
+        try {
+            $result = $service->getById($resourceId);
+            $bag->set('data', $result);
+            return $result;
+        }
+        catch(\Berthe\Exception\NotFoundException $exception) {
+            throw new \Pyrite\PyRest\Exception\NotFoundException('Main resource not found', $exception, array('resource' => $resourceName , 'id' => $resourceId));
+        }
     }
 
     public function put(Request $request, ResponseBag $bag)
@@ -118,6 +122,7 @@ class BerthePyRestController
 
     public function patchAll(Request $request, ResponseBag $bag)
     {
+        die('bitch');
         throw new \Pyrite\PyRest\Exception\NotImplementedException();
     }
 
