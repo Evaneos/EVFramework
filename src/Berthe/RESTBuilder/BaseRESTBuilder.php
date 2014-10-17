@@ -16,9 +16,14 @@ class BaseRESTBuilder
         $this->resourceName = $resourceName;
     }
 
+    public function getRESTFQCNImplementation()
+    {
+        return DefinitionHelper::getClassImplementation($this->container, $this->resourceName, 'REST', null);
+    }
+
     protected function preBuild($object)
     {
-        $classNameREST = DefinitionHelper::getClassImplementation($this->container, $this->resourceName, 'REST', null);
+        $classNameREST = $this->getRESTFQCNImplementation();
         $objectREST = new $classNameREST($object);
         return $objectREST;
     }
