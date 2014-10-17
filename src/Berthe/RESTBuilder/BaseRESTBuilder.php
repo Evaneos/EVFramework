@@ -2,6 +2,13 @@
 
 namespace EVFramework\Berthe\RESTBuilder;
 
+use Pyrite\PyRest\Exception\NotImplementedException;
+use Pyrite\PyRest\Exception\BadRequestException;
+
+use Pyrite\PyRest\Type\PyRestItem;
+use Pyrite\PyRest\Type\PyRestProperty;
+use Pyrite\PyRest\Type\PyRestCollection;
+
 use EVFramework\Generator\Configuration\Definition;
 use EVFramework\Generator\Configuration\DefinitionHelper;
 
@@ -53,24 +60,24 @@ class BaseRESTBuilder
 
         foreach($embeds as $name => $embedArray) {
             if (array_key_exists($name, $embeddables)) {
-                if ($embeddables[$name] instanceof \Pyrite\PyRest\PyRestItem || $embeddables[$name] instanceof \Pyrite\PyRest\PyRestProperty) {
+                if ($embeddables[$name] instanceof PyRestItem || $embeddables[$name] instanceof PyRestProperty) {
                     $joinMethod = "join" . ucfirst($name);
                     if (method_exists($this, $joinMethod)) {
                         $this->$joinMethod($objects, $objectsREST, $embedArray);
                     }
                     else {
-                        throw new \Pyrite\PyRest\Exception\NotImplementedException(sprintf("Couldn't embed '%s', method '%s' doesn't exist in '%s'", $name, $joinMethod, get_class($this)));
+                        throw new NotImplementedException(sprintf("Couldn't embed '%s', method '%s' doesn't exist in '%s'", $name, $joinMethod, get_class($this)));
                     }
                 }
-                elseif ($embeddables[$name] instanceof \Pyrite\PyRest\PyRestCollection) {
-                    throw new \Pyrite\PyRest\Exception\BadRequestException(sprintf("Embed a collection is forbidden, tried to embed '%s'", $name, $parentResourceName));
+                elseif ($embeddables[$name] instanceof PyRestCollection) {
+                    throw new BadRequestException(sprintf("Embed a collection is forbidden, tried to embed '%s'", $name, $parentResourceName));
                 }
                 else {
-                    throw new \Pyrite\PyRest\Exception\BadRequestException(sprintf("Can only embed a PyRestItem, '%s' is a '%s'", $name, gettype($embeddables[$name])));
+                    throw new BadRequestException(sprintf("Can only embed a PyRestItem, '%s' is a '%s'", $name, gettype($embeddables[$name])));
                 }
             }
             else {
-                throw new \Pyrite\PyRest\Exception\BadRequestException(sprintf("'%s' is not an available embed", $name));
+                throw new BadRequestException(sprintf("'%s' is not an available embed", $name));
 
             }
         }
@@ -87,5 +94,16 @@ class BaseRESTBuilder
                 }
             }
         }
+    }
+
+    protected function extractProperty(array $objects = array(), $callable)
+    {
+        $out = array();
+        foreach($objects as $object) {
+            if (is_object($object)) {
+                $out[] = $object->$callable();
+            }
+        }
+        return $out;
     }
 }
