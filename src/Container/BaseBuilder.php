@@ -47,6 +47,12 @@ class BaseBuilder
 
         $translationManager->setLocale($locale);
 
+
+        $reader = new \Doctrine\Common\Annotations\AnnotationReader();
+        \Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(function($class) { return class_exists($class); });
+        $container->bind('AnnotationReader', $reader);
+
+
         $director = $container->get('PyRestDirector');
         $packages = $container->getParameter('crud.packages');
 

@@ -82,13 +82,15 @@ classes:
             setPyRestConfiguration : [ @PyRestConfiguration ]
             setContainer : [ $container ]
             setSerializer : [ @PyRestEmbedSerializer ]
-            setConverter : [ @PyRestConverter ]
-    PyRestConverter :
-        class : Pyrite\PyRest\PyRestConverter
-        call :
-            setContainer : [ $container ]
+            setBuilderProvider : [ @PyRestBertheBuilderProvider ]
+    PyRestBertheBuilderProvider :
+        class : EVFramework\Berthe\RESTBuilder\BertheProvider
+        arguments : [ $container ]
     PyRestEmbedSerializer :
         class : Pyrite\PyRest\Serialization\EmbedSerializer
+        arguments : [ @PyRestUrlGenerator, @PyRestMetaSerializer ]
+    PyRestMetaSerializer :
+        class : Pyrite\PyRest\Serialization\MetaSerializer
         arguments : [ @PyRestUrlGenerator ]
     PyRestUrlGenerator :
         class : Pyrite\PyRest\PyRestUrlGenerator
@@ -114,14 +116,14 @@ classes:
         class : Pyrite\PyRest\Configuration\ResourceIdParser
     PyRestConfigParserResourceName :
         class : Pyrite\PyRest\Configuration\ResourceNameParser
-        arguments : [ $container ]
+        arguments : [ @PyRestBertheBuilderProvider ]
     PyRestConfigParserSort :
         class : Pyrite\PyRest\Configuration\SortParser
     PyRestConfigParserVerbosity :
         class : Pyrite\PyRest\Configuration\VerbosityParser
     PyRestConfigParserExpectedResultType :
         class : Pyrite\PyRest\Configuration\ExpectedResultTypeParser
-        arguments : [ $container ]
+        arguments : [ @PyRestBertheBuilderProvider ]
 
 
     BerthePyRestController:

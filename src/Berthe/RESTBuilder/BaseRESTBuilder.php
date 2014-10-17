@@ -5,6 +5,8 @@ namespace EVFramework\Berthe\RESTBuilder;
 use Pyrite\PyRest\Exception\NotImplementedException;
 use Pyrite\PyRest\Exception\BadRequestException;
 
+use Pyrite\PyRest\PyRestBuilder;
+
 use Pyrite\PyRest\Type\PyRestItem;
 use Pyrite\PyRest\Type\PyRestProperty;
 use Pyrite\PyRest\Type\PyRestCollection;
@@ -12,7 +14,9 @@ use Pyrite\PyRest\Type\PyRestCollection;
 use EVFramework\Generator\Configuration\Definition;
 use EVFramework\Generator\Configuration\DefinitionHelper;
 
-class BaseRESTBuilder
+
+
+class BaseRESTBuilder implements PyRestBuilder
 {
     protected $container = null;
     protected $resourceName = null;
