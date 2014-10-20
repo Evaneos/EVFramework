@@ -29,7 +29,13 @@ class BaseRESTBuilder implements PyRestBuilder
 
     public function getRESTFQCNImplementation()
     {
-        return DefinitionHelper::getClassImplementation($this->container, $this->resourceName, 'REST', null);
+        $class = DefinitionHelper::getClassImplementation($this->container, $this->resourceName, 'REST', null);
+        if(!$class) {
+            throw new NotImplementedException('REST object for resource ' . $this->resourceName . ' not implemented');
+        }
+        else {
+            return $class;
+        }
     }
 
     protected function preBuild($object)
