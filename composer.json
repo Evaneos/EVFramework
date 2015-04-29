@@ -52,7 +52,7 @@
         "evaneos/pyrite": "~1.0.1",
         "evaneos/trolamine": "~1.0.1",
         "evaneos/berthe" : "dev-master-namespace",
-        "monolog/monolog": "1.11.*@dev",
+        "monolog/monolog": "~1.11",
         "league/fractal": "~0.7.0",
         "twig/twig": "1.*",
         "asm89/stack-cors": "0.2.*"
