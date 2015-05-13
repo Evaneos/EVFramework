@@ -32,7 +32,7 @@ class DirectorInjectorDecorator implements Director
     public function buildAll($resourceName)
     {
         $results = $this->wrapped->buildAll($resourceName);
-        foreach($results as $class => $configuration) {
+        foreach ($results as $class => $configuration) {
             if ($configuration && is_array($configuration) && count($configuration)) {
                 $this->container->bind($class, $configuration);
             }

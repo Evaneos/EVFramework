@@ -2,7 +2,6 @@
 
 namespace EVFramework\Generator\Configuration;
 
-
 class DefinitionHelper
 {
     public static function getServiceName($container, $resourceName, $serviceName)
@@ -25,10 +24,9 @@ class DefinitionHelper
         $resourceConfiguration = $container->getParameter(implode('.', array(Definition::PARAM_PACKAGES, $resource)));
         $keyMainName = $resourceConfiguration[Definition::OBJECT_MAIN_NAME];
         $clazz = implode("\\", array($ns, $serviceType, $keyMainName . $serviceType));
-        if(class_exists($clazz)) {
+        if (class_exists($clazz)) {
             return $clazz;
-        }
-        else {
+        } else {
             return $defaultImpl;
         }
     }

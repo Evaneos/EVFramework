@@ -40,8 +40,7 @@ SQL;
         $value = $this->db->fetchOne($sql, array($dbKey, $lang));
         if ($value) {
             return $value;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -64,7 +63,7 @@ SQL;
         $resultSet = $this->db->fetchAll($sql);
 
         $output = array();
-        foreach($resultSet as $row) {
+        foreach ($resultSet as $row) {
             if (!array_key_exists($row['key'], $output)) {
                 $output[$row['key']] = array();
             }
@@ -87,8 +86,7 @@ WHERE
     AND lang = ?
 SQL;
             $this->db->query($delete, array($dbKey, $lang));
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
 
@@ -101,8 +99,7 @@ VALUES
     (?, ?, ?, ?)
 SQL;
             $this->db->query($insert, array($dbKey, $lang, $key, $value));
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
     }
@@ -122,8 +119,7 @@ SQL;
 
         try {
             $this->db->query($sql);
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
 
@@ -144,8 +140,7 @@ SQL;
         $key = $this->db->fetchOne($sql, array($value, $lang));
         if ($key) {
             return $key;
-        }
-        else {
+        } else {
             return false;
         }
     }

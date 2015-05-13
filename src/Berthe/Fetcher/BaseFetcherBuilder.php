@@ -86,8 +86,7 @@ class BaseFetcherBuilder implements FetcherBuilder
 
             if (method_exists($this, $methodName)) {
                 $this->$methodName($fetcher, $parameters[FilterParser::FILTER_BY_RESOURCE_ID]);
-            }
-            else {
+            } else {
                 throw new NotImplementedException(
                     sprintf("Couldn't filter resource by its parent '%s', method '%s' not implemented in '%s'",
                         $by,

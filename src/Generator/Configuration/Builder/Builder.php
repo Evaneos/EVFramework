@@ -4,6 +4,6 @@ namespace EVFramework\Generator\Configuration\Builder;
 
 interface Builder
 {
-    function setContainer($container);
-    function build($resouceName);
+    public function setContainer($container);
+    public function build($resouceName);
 }

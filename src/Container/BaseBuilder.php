@@ -49,14 +49,14 @@ class BaseBuilder
 
 
         $reader = new \Doctrine\Common\Annotations\AnnotationReader();
-        \Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(function($class) { return class_exists($class); });
+        \Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(function ($class) { return class_exists($class); });
         $container->bind('AnnotationReader', $reader);
 
 
         $director = $container->get('PyRestDirector');
         $packages = $container->getParameter('crud.packages');
 
-        foreach($packages as $packageName => $packageConfiguration) {
+        foreach ($packages as $packageName => $packageConfiguration) {
             $director->buildAll($packageName);
         }
 

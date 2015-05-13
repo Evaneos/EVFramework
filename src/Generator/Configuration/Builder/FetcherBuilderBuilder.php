@@ -20,9 +20,9 @@ class FetcherBuilderBuilder extends AbstractBuilder
         $reader = $this->container->get('AnnotationReader');
 
         $calls = array();
-        foreach($methods as $method) {
+        foreach ($methods as $method) {
             $annotations = $reader->getMethodAnnotations($method);
-            foreach($annotations as $annotation) {
+            foreach ($annotations as $annotation) {
                 if ($annotation instanceof \EVFramework\Annotation\GeneratorCallDICIT) {
                     $calls[$method->getName()] = array("@" . DefinitionHelper::getServiceName($this->container, $annotation->getResource(), $annotation->getType()));
                 }
@@ -36,7 +36,7 @@ class FetcherBuilderBuilder extends AbstractBuilder
         $configuration = array( 'class' => $class,
                                 'singleton' => 'true');
 
-        if(count($calls)) {
+        if (count($calls)) {
             $configuration['call'] = $calls;
         }
 

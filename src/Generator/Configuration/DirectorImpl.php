@@ -26,7 +26,7 @@ class DirectorImpl implements Director
     public function buildAll($resourceName)
     {
         $output = array();
-        foreach($this->builders as $builder) {
+        foreach ($this->builders as $builder) {
             list($class, $configuration) = $this->build($builder, $resourceName);
             $output[$class] = $configuration;
         }

@@ -5,9 +5,6 @@ namespace EVFramework\Authentication;
 use Evaneos\Pro\Framework\Security\EvaneosRoleManager;
 use Evaneos\Pro\Framework\Security\EmailUserDetailsService;
 use Evaneos\Pro\Framework\Security\EvaneosPasswordEncoder;
-
-
-
 use Trolamine\Core\Authentication\Password\PasswordEncoder;
 use Trolamine\Core\Authentication\Authentication;
 use Trolamine\Core\Authentication\Role\RoleManager;
@@ -43,11 +40,9 @@ class ServiceAuthentication
         session_regenerate_id(true);
         try {
             return $this->authenticationManager->authenticate(new UsernamePasswordAuthenticationToken($email, $password));
-        }
-        catch (InsufficientAuthenticationException $e) {
+        } catch (InsufficientAuthenticationException $e) {
             return null;
-        }
-        catch (BadCredentialsException $e) {
+        } catch (BadCredentialsException $e) {
             return null;
         }
     }

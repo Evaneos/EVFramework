@@ -2,7 +2,8 @@
 
 namespace EVFramework\Authentication;
 
-class BertheAuthUser extends \Berthe\AbstractVO {
+class BertheAuthUser extends \Berthe\AbstractVO
+{
     const VERSION = 1;
 
     protected $firstname = "";

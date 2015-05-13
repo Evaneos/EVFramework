@@ -4,13 +4,11 @@ namespace EVFramework\PyRest;
 
 use Symfony\Component\HttpFoundation\Request;
 use Pyrite\PyRest\RestController;
-
 use Pyrite\PyRest\PyRestConfiguration;
 use Pyrite\PyRest\Configuration\ResourceNameParser;
 use Pyrite\PyRest\Configuration\ResourceIdParser;
 use Pyrite\PyRest\Configuration\PaginationParser;
 use Pyrite\PyRest\Configuration\FilterParser;
-
 use Pyrite\Response\ResponseBag;
 use Pyrite\Layer\Executor\Executable;
 use Berthe\Service;
@@ -94,9 +92,8 @@ class BerthePyRestController
             $result = $service->getById($resourceId);
             $bag->set('data', $result);
             return $result;
-        }
-        catch(\Berthe\Exception\NotFoundException $exception) {
-            throw new \Pyrite\PyRest\Exception\NotFoundException('Main resource not found', $exception, array('resource' => $resourceName , 'id' => $resourceId));
+        } catch (\Berthe\Exception\NotFoundException $exception) {
+            throw new \Pyrite\PyRest\Exception\NotFoundException('Main resource not found', $exception, array('resource' => $resourceName, 'id' => $resourceId));
         }
     }
 

@@ -22,7 +22,7 @@ class BertheProvider implements PyRestBuilderProvider
     {
         $builders = array();
         $packages = $this->container->getParameter('crud.packages');
-        foreach($packages as $resourceName => $config) {
+        foreach ($packages as $resourceName => $config) {
             $builders[$resourceName] = $this->getBuilder($resourceName);
         }
         return $builders;

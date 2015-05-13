@@ -28,7 +28,8 @@ class BitwiseRoleManager implements RoleManager
      * (non-PHPdoc)
      * @see \Trolamine\Core\Authentication\Role\RoleManager::getRoles()
      */
-    public function getRoles(UserDetails $userDetails) {
+    public function getRoles(UserDetails $userDetails)
+    {
         /* @var $user User */
         $user = $userDetails->getUser();
         $acl = $user->getAcl() ;
@@ -43,10 +44,11 @@ class BitwiseRoleManager implements RoleManager
      *
      * @return array<string>
      */
-    private function getRolesFromBitwise($bitwise) {
+    private function getRolesFromBitwise($bitwise)
+    {
         $roles = array();
         foreach ($this->roles as $roleName=>$roleValue) {
-            if((bool) ($roleValue & $bitwise)) {
+            if ((bool) ($roleValue & $bitwise)) {
                 $roles[] = $roleName;
             }
         }

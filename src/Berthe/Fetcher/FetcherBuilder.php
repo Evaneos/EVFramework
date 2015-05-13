@@ -11,5 +11,5 @@ interface FetcherBuilder
      * @param  PyRestConfiguration $config
      * @return \Berthe\Fetcher
      */
-    function build(PyRestConfiguration $config);
+    public function build(PyRestConfiguration $config);
 }
