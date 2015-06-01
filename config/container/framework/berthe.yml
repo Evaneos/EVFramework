@@ -32,8 +32,21 @@ classes:
         call:
             setEnableNotice: [ false ]
             registerStorage[0]: [ dbString, @TranslationStringDatabaseEngine ]
+            setLogger: [ @I18nLogger ]
     TranslationStringDatabaseEngine:
         class: \EVFramework\Translation\StringDatabaseEngine
         singleton: true
         call:
             setDbAdapter: [ @DbWriter ]
+    I18nLogger:
+        class: \Monolog\Logger
+        singleton: true
+        arguments: [ 'i18n' ]
+        call:
+            pushHandler: [ @I18nFileLoggerHandler ]
+            pushProcessor: [ @I18nWebProcessor ]
+    I18nFileLoggerHandler:
+        class: \Monolog\Handler\StreamHandler
+        arguments: [ %log.i18n.file, %log.i18n.level ]
+    I18nWebProcessor:
+        class: \Monolog\Processor\WebProcessor

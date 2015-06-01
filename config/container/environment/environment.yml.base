@@ -25,3 +25,8 @@ parameters :
     memcached :
         host : 127.0.0.1
         port : 11211
+        
+    log:
+        i18n:
+            file: path_to_i18n_log_file.log
+            level : warning
