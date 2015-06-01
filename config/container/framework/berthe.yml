@@ -30,7 +30,6 @@ classes:
         builder: \EVFramework\Translation\InstanceCreator::factory
         singleton: true
         call:
-            setEnableNotice: [ false ]
             registerStorage[0]: [ dbString, @TranslationStringDatabaseEngine ]
             setLogger: [ @I18nLogger ]
     TranslationStringDatabaseEngine:
