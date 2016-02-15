@@ -13,8 +13,13 @@ parameters :
                 operation  : @MethodSecurityExpressionOperations
                 method : isAuthenticated
 
-
 classes:
+    SecurityLogger:
+        class: \Pyrite\Logger\LoggerFactory
+        singleton: true
+        builder: LoggerFactory->create
+        arguments: [ 'app.security' ]
+
     # Controller for login/logout processing
     AuthDoLoginController :
         class : \EVFramework\Authentication\LoginPostController
@@ -30,6 +35,9 @@ classes:
     ServiceAuthentication :
         class : \EVFramework\Authentication\ServiceAuthentication
         arguments : [ @BaseAuthenticationManager ]
+        call:
+            setLogger: [ @SecurityLogger ]
+
     BaseAuthenticationManager :
         class : \Trolamine\Core\Authentication\BaseAuthenticationManager
         arguments : [ @BaseUserDetailsService, @BasePasswordEncoder, @BitwiseRoleManager ]
@@ -60,6 +68,8 @@ classes:
         call :
             setReader : [ @AuthUserReader ]
             setWriter : [ @AuthUserWriter ]
+
+
     AuthUserReader :
         class : \Berthe\DAL\BaseReader
         call :

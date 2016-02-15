@@ -4,7 +4,6 @@ routes:
             pattern: "/"
             methods: [ get ]
         dispatch:
-            PyriteSessionFactory: { 'start': true }
             PyriteApplicationFactory:
                 AuthenticationLayer: [ ]
                 ViewRenderer:
@@ -18,7 +17,6 @@ routes:
             pattern: "/login"
             methods: [ post ]
         dispatch:
-            PyriteSessionFactory: { 'start': true }
             PyriteApplicationFactory:
                 AuthenticationLayer: [ ]
                 RedirectionLayer :
@@ -31,7 +29,6 @@ routes:
             pattern: "/logout"
             methods: [ get ]
         dispatch:
-            PyriteSessionFactory: { 'start': true }
             PyriteApplicationFactory:
                 AuthenticationLayer: [ ]
                 RedirectionLayer :
