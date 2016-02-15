@@ -13,7 +13,6 @@ parameters :
                 operation  : @MethodSecurityExpressionOperations
                 method : isAuthenticated
 
-
 classes:
     # Controller for login/logout processing
     AuthDoLoginController :

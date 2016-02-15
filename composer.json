@@ -29,10 +29,6 @@
         },
         {
             "type": "vcs",
-            "url": "git@github.com:Evaneos/pyrite.git"
-        },
-        {
-            "type": "vcs",
             "url": "git@github.com:Evaneos/trolamine.git"
         },
         {
@@ -48,8 +44,7 @@
     },
     "require": {
         "evaneos/translations": "~2.0",
-        "evaneos/dic-it": "~2.0",
-        "evaneos/pyrite": "~3.0",
+        "evaneos/pyrite": "~4.0",
         "evaneos/trolamine": "~2.0",
         "evaneos/berthe" : "~2.0",
         "monolog/monolog": "^1.13",
@@ -63,7 +58,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.1.x-dev"
+            "dev-master": "5.x-dev"
         }
     }
 }
