@@ -96,8 +96,6 @@ class ServiceAuthentication
             $authentication = $this->auth;
         }
 
-        dump($authentication->getAuthenticationMode());
-
         return $authentication->getAuthenticationMode() == Authentication::FULLY_AUTHENTICATED;
     }
 }
