@@ -46,7 +46,7 @@
         "evaneos/translations": "~2.0",
         "evaneos/pyrite": "~4.0",
         "evaneos/trolamine": "~2.0",
-        "evaneos/berthe" : "~2.0",
+        "evaneos/berthe" : "~4.0",
         "monolog/monolog": "^1.13",
         "league/fractal": "~0.7.0",
         "twig/twig": "~1.18",
