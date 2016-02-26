@@ -2,6 +2,8 @@
 
 namespace EVFramework\Translation;
 
+use Berthe\DAL\DbReader;
+
 class StringDatabaseEngine extends \Translation_Storage_Abstract implements \Translation_Storage_Interface
 {
     protected $db = null;
@@ -9,7 +11,7 @@ class StringDatabaseEngine extends \Translation_Storage_Abstract implements \Tra
     /**
      * @param \Berthe\DAL\DbWriter $db
      */
-    public function setDbAdapter(\Berthe\DAL\DbWriter $db)
+    public function setDbAdapter(DbReader $db)
     {
         $this->db = $db;
         return $this;

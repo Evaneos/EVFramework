@@ -1,19 +1,60 @@
 classes:
-    FetcherPGSQLQueryBuilder:
-        class: \Berthe\DAL\FetcherPGSQLQueryBuilder
+    FetcherPGSQLQueryBuilder :
+        class : \Berthe\DAL\FetcherPGSQLQueryBuilder
+        singleton : true
+
+####### Transformer ###########
+    BertheBooleanTransformer:
+        class: Berthe\Transformer\BooleanTransformer
         singleton: true
+
+    BertheDateTimeTransformer:
+        class: Berthe\Transformer\DateTimeTransformer
+        singleton: true
+
+    BertheStringTransformer:
+        class: Berthe\Transformer\StringTransformer
+        singleton: true
+
+    BertheTranslationTransformer:
+        class: Berthe\Transformer\TranslationTransformer
+        singleton: true
+
+##### TransformerResolver ########
+    BertheTransformerResolver:
+        class: Berthe\Transformer\TransformerResolver
+        singleton: true
+        call:
+            addTransformer[0]: [ @BertheBooleanTransformer ]
+            addTransformer[1]: [ @BertheStringTransformer ]
+            addTransformer[2]: [ @BertheDateTimeTransformer ]
+            addTransformer[3]: [ @BertheTranslationTransformer ]
+
+##### ParameterResolver ######
+    BertheParameterTransformer:
+        class: Berthe\Util\ParameterTransformer
+        singleton: true
+        arguments: [ @BertheTransformerResolver ]
+
+##### READER ########
     DbReader:
-        class: \Berthe\DAL\DbReader
+        class: Berthe\DAL\DefaultDbReader
         singleton: true
-        arguments: [ @DbAdapter ]
+        arguments: [ @DbAdapter, @BertheParameterTransformer ]
+
+##### WRITER ########
     DbWriter:
-        class: \Berthe\DAL\DbWriter
-        singleton: true
-        arguments: [ @DbAdapter ]
-    DbAdapter:
-        class: Zend_Db_Adapter_Abstract
-        builder: \Zend_Db::factory
-        arguments: [ %db.adapter, %db.params ]
+        class : Berthe\DAL\DefaultDbWriter
+        singleton : true
+        arguments : [ @DbAdapter, @BertheParameterTransformer ]
+
+#### END ###########
+    DbAdapter :
+        class : Zend_Db_Adapter_Abstract
+        builder : \Zend_Db::factory
+        arguments : [ %db.adapter, %db.params ]
+        singleton : true
+
     DbTranslator:
         class: \Evaneos\Berthe\DAL\Translator
         call:
@@ -44,4 +85,4 @@ classes:
         class: \EVFramework\Translation\StringDatabaseEngine
         singleton: true
         call:
-            setDbAdapter: [ @DbWriter ]
+            setDbAdapter: [ @DbReader ]
