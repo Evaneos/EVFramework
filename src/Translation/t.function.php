@@ -2,10 +2,9 @@
 function t($key, $lang = null)
 {
     if (!$lang) {
-        $lang = 'fr';
+        $lang = \Translation_Manager::getInstance()->getLocale();
     }
-
-
+    
     if ($key instanceof \Berthe\Translation\Translation) {
         $translation = $key->format($lang);
     } else {
