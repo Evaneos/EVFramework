@@ -3,18 +3,35 @@
 namespace EVFramework\Translation;
 
 use Berthe\DAL\DbReader;
+use Berthe\DAL\DbWriter;
+use Berthe\DAL\Writer;
 
 class StringDatabaseEngine extends \Translation_Storage_Abstract implements \Translation_Storage_Interface
 {
-    protected $db = null;
+    /**
+     * @var DbReader
+     */
+    protected $reader;
 
     /**
-     * @param \Berthe\DAL\DbWriter $db
+     * @var DbWriter
      */
-    public function setDbAdapter(DbReader $db)
+    protected $writer;
+
+    /**
+     * @param DbReader $reader
+     */
+    public function setReader(DbReader $reader)
     {
-        $this->db = $db;
-        return $this;
+        $this->reader = $reader;
+    }
+
+    /**
+     * @param DbWriter $writer
+     */
+    public function setWriter(DbWriter $writer)
+    {
+        $this->writer = $writer;
     }
 
     /**
@@ -39,7 +56,7 @@ WHERE
     md5key = ?
     AND lang = ?
 SQL;
-        $value = $this->db->fetchOne($sql, array($dbKey, $lang));
+        $value = $this->reader->fetchOne($sql, array($dbKey, $lang));
         if ($value) {
             return $value;
         } else {
@@ -62,7 +79,7 @@ ORDER BY
     lang ASC
 SQL;
 
-        $resultSet = $this->db->fetchAll($sql);
+        $resultSet = $this->reader->fetchAll($sql);
 
         $output = array();
         foreach ($resultSet as $row) {
@@ -87,7 +104,7 @@ WHERE
     md5key = ?
     AND lang = ?
 SQL;
-            $this->db->query($delete, array($dbKey, $lang));
+            $this->writer->query($delete, array($dbKey, $lang));
         } catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
@@ -100,7 +117,7 @@ INSERT INTO
 VALUES
     (?, ?, ?, ?)
 SQL;
-            $this->db->query($insert, array($dbKey, $lang, $key, $value));
+            $this->writer->query($insert, array($dbKey, $lang, $key, $value));
         } catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
@@ -120,7 +137,7 @@ IN
 SQL;
 
         try {
-            $this->db->query($sql);
+            $this->writer->query($sql);
         } catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
@@ -139,7 +156,7 @@ WHERE
     value = ?
     AND lang = ?
 SQL;
-        $key = $this->db->fetchOne($sql, array($value, $lang));
+        $key = $this->reader->fetchOne($sql, array($value, $lang));
         if ($key) {
             return $key;
         } else {
