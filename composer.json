@@ -39,14 +39,14 @@
     "config": {
         "bin-dir": "bin/",
         "platform": {
-            "php": "5.3.10"
+            "php": "5.5.30"
         }
     },
     "require": {
         "evaneos/translations": "~2.0",
         "evaneos/pyrite": "~4.0",
         "evaneos/trolamine": "~2.0",
-        "evaneos/berthe" : "~4.0",
+        "evaneos/berthe" : "~5.0",
         "monolog/monolog": "^1.13",
         "league/fractal": "~0.7.0",
         "twig/twig": "~1.18",
