@@ -121,6 +121,8 @@ SQL;
         } catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
+
+        return true;
     }
 
     public function deleteKeys($keys)
