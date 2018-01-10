@@ -43,7 +43,7 @@
         "evaneos/translations": "~2.0",
         "evaneos/pyrite": "~4.0",
         "evaneos/trolamine": "~2.0",
-        "evaneos/berthe" : "~5.0",
+        "evaneos/berthe" : "~5.0 || ^6.0",
         "monolog/monolog": "^1.13",
         "league/fractal": "~0.7.0",
         "twig/twig": "~1.18",
@@ -57,5 +57,7 @@
         "branch-alias": {
             "dev-master": "5.x-dev"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
